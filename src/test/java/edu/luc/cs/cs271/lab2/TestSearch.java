@@ -1,6 +1,10 @@
 package edu.luc.cs.cs271.lab2;
 
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class TestSearch {
@@ -14,7 +18,11 @@ public class TestSearch {
     return array;
   }
 
-  // TODO makeListFixture
+  List<Team> makeListFixture(final int size) {
+      final Team[] array = makeArrayFixture(size);
+      final List<Team> list = Arrays.asList(array);
+      return list;
+  }
 
   @Test
   public void testFindPositionArray0() {
@@ -33,10 +41,59 @@ public class TestSearch {
     final Team[] arr = makeArrayFixture(10);
     assertFalse(Search.findTeamPosition(arr, "Team 11").isPresent());
   }
-  
-  // TODO: testFindPositionList0, 10s, 10f
-  
-  // TODO: testFindMinFundingArray for several sizes and scenarios
 
-  // TODO: testFindMinFundingArrayFast for several sizes and scenarios
+    @Test
+    public void testFindPositionList0() {
+      final List<Team> list = makeListFixture(0);
+      assertFalse(Search.findTeamPosition(list,"Team 5").isPresent());
+    }
+
+    @Test
+    public void testFindPositionList10s() {
+        final List<Team> list= makeListFixture(10);
+        assertTrue(Search.findTeamPosition(list, "Team 5").isPresent());
+    }
+
+    @Test
+    public void testFindPositionList10f() {
+        final List<Team> list = makeListFixture(10);
+        assertFalse(Search.findTeamPosition(list,"Team 11").isPresent());
+    }
+
+    @Test
+    public void testFindMinFundingArray0() {
+        final Team[] arr = makeArrayFixture(0);
+        assertFalse(Search.findTeamMinFunding(arr, 100).isPresent());
+    }
+
+    @Test
+    public void testFindMinFundingArray5() {
+        final Team[] arr = makeArrayFixture(5);
+        assertTrue(Search.findTeamMinFunding(arr, 100).isPresent());
+    }
+
+    @Test
+    public void testFindMinFundingArray5f() {
+        final Team[] arr = makeArrayFixture(5);
+        assertFalse(Search.findTeamMinFunding(arr, 1000).isPresent());
+    }
+
+  @Test
+  public void testFindMinFundingFastArray0() {
+      final Team[] arr = makeArrayFixture(0);
+      assertFalse(Search.findTeamMinFundingFast(arr, 100).isPresent());
+  }
+
+    @Test
+    public void testFindMinFundingArrayFast5() {
+        final Team[] arr = makeArrayFixture(5);
+        assertTrue(Search.findTeamMinFundingFast(arr, 100).isPresent());
+    }
+
+    @Test
+    public void testFindMinFundingArrayFast5f() {
+        final Team[] arr = makeArrayFixture(5);
+        assertFalse(Search.findTeamMinFundingFast(arr, 1000).isPresent());
+    }
+
 }
